@@ -1,0 +1,45 @@
+When a thesis panel or QA engineer evaluates a Window-Parenting Compositor Subsystem, they will test it across a rigorous matrix of different application types, graphics engines, and security states.
+Because this is a low-level OS hack, your project will not achieve a 100% pass rate out of the box. In a systems-level computer science thesis, a 75% to 85% success rate across all application categories is considered highly successful, as long as you can scientifically explain why the remaining 15% failed based on Windows architectural boundaries.
+Here is a breakdown of what the test suite looks like, what will pass easily, and what is highly likely to fail.
+------------------------------
+## 📊 Expected Test Case Distribution & Success Rates
+
+| Application Category (Test Cases) | Expected Pass Rate | Why it Passes or Fails |
+|---|---|---|
+| Standard Win32 / GDI Apps (Notepad++, VLC, Paint, File Explorer) | ~98% Pass | They use traditional Windows rendering trees. Their handles are easy to capture, and coordinate mapping is flawless. |
+| Electron / Chromium Apps (VS Code, Discord, Slack, Spotify) | ~80% Pass | They use hardware acceleration but can be tampered with. They require aggressive window style stripping to clip properly. |
+| Heavy 3D Engines & Games (Blender, Unreal Engine, Unity, Games) | ~60% Pass | They render directly to the GPU swap chain. They will heavily flicker or render black unless your DirectX/Vulkan texture injection loop is perfectly implemented. |
+| Admin Isolated Apps (Task Manager, Command Prompt as Admin) | ~0% Pass (Without Broker) ~90% Pass (With Broker) | Windows User Account Control (UAC) blocks access unless you build a privileged background service to bypass integrity levels. |
+
+------------------------------
+## What "Passed" Looks Like (Success Criteria)
+A test case is marked as PASSED when the nested child app behaves as if it were natively part of the parent application. The metrics for a pass are:
+
+* Geometric Precision: When you resize Notepad++, the nested app inside it resizes instantly without leaving ugly blank black borders or stretching out of proportion.
+* Seamless Input Routing: You can click a button in the child app, and it responds instantly (low input latency). Crucially, the parent application's window frame doesn't blink or turn "inactive" (grayed out).
+* Zero Frame Drops: A video playing inside the nested app maintains its standard frame rate (e.g., 60 FPS) without stuttering or skipping cycles.
+
+------------------------------
+## ❌ What "Failed" Looks Like (And Why It Happens)
+In your thesis paper, your "Results & Discussion" chapter will focus heavily on these failures. A test case is marked as FAILED when one of the following OS anomalies occurs:
+## 1. The "Ghost Click" Failure (Coordinate Misalignment)
+
+* The Symptom: The child app looks visually perfect inside Notepad++. However, when you try to click a button on the left side of the child app, nothing happens—but clicking empty space on the right side suddenly triggers the button.
+* Why it fails: The child app is still telling the OS its old, original screen coordinates. Your engine failed to translate the mouse cursor's X/Y pixels relative to the parent's moving window frame.
+
+## 2. The "Invisible Man" Failure (DWM Surface Layering)
+
+* The Symptom: You hear the audio of the nested app, and your task manager shows it is running, but the designated panel inside Notepad++ is completely transparent, pitch black, or shows a frozen screenshot of your desktop.
+* Why it fails: This happens with modern web browsers and games. They bypass the standard Windows drawing engine and paint directly to the screen via the GPU. The window handle exists, but there are no actual pixel frames attached to it for Windows to draw hierarchically.
+
+## 3. The "Access Denied" Crash (UAC Block)
+
+* The Symptom: Your injector software completely crashes, or throwing a Win32 Error 5 (ERROR_ACCESS_DENIED) when attempting to target a specific application.
+* Why it fails: You tried to parent an application that has higher security privileges than your compositor tool. The Windows Kernel flags this as a malware-like security violation and violently cuts the thread connection.
+
+------------------------------
+## 💡 The Secret to Passing Your Thesis Defense
+A junior developer sees a "Fail" as a broken project. An academic researcher sees a "Fail" as a valuable data point.
+If you document that 100% of standard apps passed, but 40% of 3D games failed because of Desktop Window Manager (DWM) surface isolation synchronization, your panel will give you an A. You proved you understand the concrete limitations of the operating system.
+If you want to start building the test suite, we can write a script for Test Case #1 (The Standard App Test). Do you want to see how to target and hijack a simple, low-security app like Windows Notepad or Calculator to see your first "Pass"?
+

@@ -1,0 +1,51 @@
+As established in our project timeline, a thesis of this technical depth typically spans 6 to 8 months (or two full university semesters) to transition from a proposal to a finished, fully defended master's or undergraduate paper.
+To help you visualize exactly how your time will be spent across a standard 24-week academic pipeline, here is a highly scannable, week-by-week execution roadmap tailored for a junior developer working with an AI co-pilot.
+------------------------------
+## ⏱️ The 24-Week Master Plan
+
+[ W1 - W4 ] ──> Research & Setup (Literature Review, Win32 API Exploration)
+[ W5 - W9 ] ──> Core Engineering (Window Hijacking, Border Stripping, Coordinate Mapping)
+[W10 - W14] ──> Advanced Engineering (Input Hooking State Machine, Shared Memory IPC)
+[W15 - W18] ──> Edge Cases & Testing (DWM Graphics Tweaks, UAC Broker, Running the Test Matrix)
+[W19 - W21] ──> Data Gathering (Measuring Latency, FPS, CPU/Memory Benchmarks)
+[W22 - W24] ──> Paper Writing & Defense (Compiling Drafts, Mock Defense Preparation)
+
+------------------------------
+## 📅 Phase-by-Phase Weekly Breakdown## Phase 1: Research, Foundations & Initial Hooking (Weeks 1–4)
+
+* Week 1-2: Write the formal thesis proposal. Review existing literature on Windows desktop compositors, X11/Wayland architectures, and Win32 messaging loops.
+* Week 3-4: Set up your development repository (C++ or Rust). Use AI to map out the core kernel and user libraries (user32.dll, kernel32.dll).
+* Milestone: Proposal approved by your advisor; your development environment is functional.
+
+## Phase 2: Core Engineering & Window Hijacking (Weeks 5–9)
+
+* Week 5-6: Build the window finder module. Capture external target window handles (HWND) and apply basic style modifications (stripping title bars, borders, and close buttons).
+* Week 7-9: Implement the naive SetParent loop. Write the geometric matrix algorithm that forces the child window to resize and snap to a container panel.
+* Milestone: A standard application (like Notepad) is visually trapped inside your custom application shell.
+
+## Phase 3: Advanced Systems Programming & Focus Routing (Weeks 10–14)
+
+* Week 10-12: Build the Low-Level Input Hooking State Machine (WH_MOUSE_LL and WH_KEYBOARD_LL). Force Windows to route keystrokes into the nested child window without stripping active focus from your parent application.
+* Week 13-14: Implement a Shared Memory IPC Ring Buffer. Program the system to handle real-time, zero-delay window resizing messages between processes to eliminate layout flickering.
+* Milestone: The nested application is fully interactive, types smoothly, and matches your parent application's layout modifications perfectly.
+
+## Phase 4: Edge Cases, Security Barriers & Cross-API Tweaks (Weeks 15–18)
+
+* Week 15-16: Address hardware acceleration gaps. Modify window styles and paint flags (WM_PAINT, WM_ERASEBKGND) to accommodate more demanding Electron apps (like VS Code).
+* Week 17-18: Build a basic elevated background service (Broker) to duplicate handles and test parenting across standard and Administrator integrity levels.
+* Milestone: Your engine successfully embeds a diverse profile of simple and complex applications.
+
+## Phase 5: Executing the Test Matrix & Benchmarking (Weeks 19–21)
+
+* Week 19: Run your standardized test cases across GDI, Electron, and heavy graphics apps to log your official "Pass/Fail" percentages.
+* Week 20-21: Profile performance metrics. Use software profilers to measure exact input propagation delays (in microseconds), frame-rate stability (FPS), and CPU/RAM overhead bytes.
+* Milestone: All quantitative charts, graphs, and failure-analysis tables are finalized for your data chapter.
+
+## Phase 6: Final Paper Compilation & Defense Prep (Weeks 22–24)
+
+* Week 22-23: Complete the written manuscript (typically 50–80 pages), polishing the Methodology, Results, and Technical Limitations chapters. Use AI to refine your academic tone.
+* Week 24: Submit your final draft, create your presentation slide deck, and practice answering aggressive panel questions regarding your OS architectural gaps.
+* Milestone: Graduation.
+
+Are you aiming to complete this project within a compressed single-semester timeframe (approx. 12–14 weeks), or do you have a full academic year (30+ weeks) to work with? Let me know so we can dynamically adjust the scope of the advanced features!
+

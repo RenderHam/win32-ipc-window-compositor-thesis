@@ -1,0 +1,50 @@
+
+With a compressed 3 to 4 months (12 to 16 weeks) remaining, you are on a tight deadline, but this project is still entirely achievable. To pull this off as a junior developer with an AI co-pilot, you must ruthlessly cut out the complex, high-risk features (like DirectX graphics injection loops or privileged UAC brokers) and focus strictly on a rock-solid, working core prototype.
+Your thesis will actually benefit from this constraint: your paper will focus on a lightweight, efficient implementation of window manipulation, and your "Gaps" section will explain why the advanced features were left for future research.
+Here is your Scoping Strategy and a streamlined 14-Week Accelerated Roadmap to guarantee you finish and graduate on time.
+------------------------------
+## ✂️ The "Scope Triage" Strategy: What to Keep vs. What to Cut
+
+* KEEP (The Core Engine): Target standard Win32/GDI apps (Notepad, Calculator, VLC), strip borders, force window parenting (SetParent), implement basic layout resizing, and use a basic Windows message hook to keep input focus working.
+* CUT (The Complex Time-Sinks): Do not try to inject into heavy 3D video games or override Administrator privileges. Explicitly state in your thesis scope that your engine targets Productivity, Development, and Office Applications running at matching OS integrity levels.
+
+------------------------------
+## ⏱️ The 14-Week Sprint Schedule
+
+[ W1 - W2 ] ──> Core Architecture & Advisor Sign-off
+[ W3 - W5 ] ──> The Window Hijacking Module (Visual Trapping)
+[ W6 - W8 ] ──> Input Focus Routing & Layout Resizing
+[ W9 - W11] ──> Test Matrix, Data Benchmarking & Drafts
+[W12 - W14] ──> Paper Polish, Review Cycles & Defense Prep
+
+------------------------------
+## 📅 Weekly Task Execution Plan## Phase 1: Rapid Setup & Proposal Sign-off (Weeks 1–2)
+
+* Tasks: Finalize and submit your project abstract. Set up a Git repository using Python (with pywin32) or C++. Python is highly recommended for this short timeline because it allows you to test Windows API behaviors instantly without wrestling with compiler configurations.
+* Milestone: Proposal approved; initial Win32 libraries successfully imported and talking to your OS.
+
+## Phase 2: The Visual Trapping Engine (Weeks 3–5)
+
+* Tasks: Write the window-finding function using FindWindow or EnumWindows. Use AI to generate the code that targets an open app (like Notepad++ or standard Notepad), violently strips its title bar/borders using SetWindowLong, and binds it into your custom parent shell using SetParent.
+* Milestone: The child app is physically trapped inside your parent window frame.
+
+## Phase 3: The Interaction & Layout Loop (Weeks 6–8)
+
+* Tasks: Build the coordinate layout system. Write an event listener so that whenever you drag or resize your parent window, a message is instantly passed to the child window to resize alongside it. Implement a basic Win32 focus hook (WM_MOUSEACTIVATE) so clicking inside the child doesn't break the parent window's visual state.
+* Milestone: Your prototype is fully functional. You can type and click inside a cleanly embedded, perfectly resizing child application.
+
+## Phase 4: Benchmarking & Core Chapter Writing (Weeks 9–11)
+
+* Tasks: Run your test cases exclusively on standard productivity applications. Use simple Python timers to benchmark Input Latency (how long a keypress takes to register) and CPU/RAM footprint overhead caused by your background loop. Write Chapters 1 to 3 (Introduction, Literature Review, Methodology).
+* Milestone: Data gathering is complete; the core engineering chapters of your paper are fully drafted.
+
+## Phase 5: Final Writing, Feedback, and Defense (Weeks 12–14+)
+
+* Tasks: Compile your Results and Limitations chapters. Use AI to clean up your academic vocabulary, turning your raw engineering notes into structured, technical prose. Submit drafts to your advisor, build your presentation slide deck, and run mock defenses.
+* Milestone: Graduation and successful project defense.
+
+------------------------------
+## 💡 Your Immediate Next Step to Save Time
+To prevent losing a single day, you should prove the concept on your machine right now.
+Let me know if you would like me to write a dead-simple, 25-line Python script using pywin32 that you can copy-paste and run immediately. It will find your open Windows Notepad app, strip its borders, and prove you can manipulate external windows before you even show the idea to your professor. Should we start there?
+

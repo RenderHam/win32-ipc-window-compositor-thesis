@@ -1,0 +1,35 @@
+While the proposal forms a highly rigorous and academically viable thesis, a sharp research panel will immediately probe the inherent architectural vulnerabilities of the Windows operating system. To defend this thesis successfully, you must explicitly identify and address these architectural gaps, security boundaries, and edge cases.
+Here are the critical engineering gaps of a Win32-based window-parenting system, categorized by the technical bottlenecks they create.
+------------------------------
+## 1. The Security Boundary Gap (UAC & Integrity Levels)
+Windows implements User Account Control (UAC) and Mandatory Integrity Control (MIC) to isolate processes. Applications run at different integrity levels (Low, Medium, High/Administrator).
+
+* The Gap: A process running at a Medium integrity level (like a standard instance of Notepad++) is strictly forbidden by the OS from sending window messages, injecting hooks, or parenting a process running at a High integrity level (like a game run as Administrator, or Task Manager).
+* Thesis Solution/Defense: Your architecture must include a privileged broker service running as a Windows NT Service. This broker acts as an elevated intermediary that handles the handle duplication (DuplicateHandle) and parenting operations across integrity silos.
+
+## 2. The Graphic Surface Compositing Gap (DWM Bypass)
+Standard Win32 windows rely on the legacy Graphics Device Interface (GDI), where the OS draws windows using a strict hierarchical tree structure. However, modern applications (like Chrome, Discord, Electron apps, and 3D games) bypass GDI entirely. They use hardware acceleration (DirectX 12, Vulkan) to render frames directly to a graphical surface managed by the Desktop Window Manager (DWM).
+
+* The Gap: When you use SetParent on a hardware-accelerated app, the child application often refuses to clip to the parent's boundaries. It may render as a floating overlay, cause black screen artifacts, or severely flicker because its render loop is asynchronous to the parent’s GDI paint messages (WM_PAINT).
+* Thesis Solution/Defense: Instead of traditional window parenting, your engine can implement a Surface Capture and Injection Loop. The engine hooks the child's swap chain (using DirectX/Vulkan API hooking), captures the raw frame buffer in a shared graphics memory texture (ID3D11Texture2D), and renders that texture onto a dedicated surface inside the parent application.
+
+## 3. The Input Focus & Modality War (Active Window State)
+Windows determines keyboard and focus states globally via the active thread's message queue.
+
+* The Gap: When a user types inside a nested child window, Windows shifts the Active Window State to that child. From the OS's perspective, the parent window has just lost focus. This triggers UI bugs: the parent's title bar goes gray, global hotkeys registered by the parent stop working, and dropdown menus inside the parent instantly close.
+* Thesis Solution/Defense: Your engine must implement Low-Level Input Hooks (WH_KEYBOARD_LL and WH_MOUSE_LL). Instead of allowing Windows to route focus natively, your system intercepts the input at the kernel-to-user boundary, keeps the parent window functionally "active," and programmatically injects the raw input messages (WM_CHAR, WM_KEYDOWN) directly into the child’s isolated message thread using PostMessage.
+
+## 4. DPI Awareness and Coordinate Mapping Discrepancies
+Modern Windows handles high-resolution displays using per-monitor DPI scaling. Applications can be "DPI Unaware," "System DPI Aware," or "Per-Monitor DPI Aware."
+
+* The Gap: If you nest a DPI-unaware application (scaled at 100% by the OS) inside a Per-Monitor DPI-aware parent application (running on a 4K monitor scaled at 150%), the child application's coordinate mapping breaks. Mouse clicks will hit the wrong pixels, text will look heavily blurred, and resizing the window will cause geometric warping.
+* Thesis Solution/Defense: Your custom layout matrix partitioning algorithm must include a Deterministic Coordinate Transformation Layer. It must query the DPI_AWARENESS_CONTEXT of both processes and dynamically calculate a scaling scalar to translate parent window coordinates into child pixel space in real-time.
+
+------------------------------
+## 💡 How to frame these gaps in your Thesis
+In a defense, gaps are not failures—they are your Scope Limiters and Future Work. You can weaponize these gaps to show your deep understanding of Windows internals by stating:
+
+"While naive window manipulation fails due to DWM surface isolation and UAC integrity boundaries, this thesis specifically addresses these gaps by implementing a shared-memory graphics surface injection pipeline and a low-level input-routing state machine."
+
+To help you prepare for this, I can provide a Technical Defense Strategy outlining the exact questions a panel might ask about these gaps and how to answer them, or I can draft the Architecture Diagram Specification for the shared-memory broker. What would be most useful for your planning?
+

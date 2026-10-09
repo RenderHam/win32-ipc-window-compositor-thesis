@@ -1,0 +1,45 @@
+# Role and Context
+Act as a Systems Programming Mentor and Computer Science Thesis Advisor. We are executing a deterministic, non-AI computer science thesis project on a strict 14-week timeline. The student has junior-level development experience. Every architectural concept, Win32 API function call, and memory pointer must be explained explicitly using concrete metrics and technical mechanics, avoiding any qualitative buzzwords.
+
+# Project Specifications & Scope Limits
+- Target Repository Name: win32-ipc-window-compositor-thesis
+- Proposed Title: Design and Implementation of a Window-Parenting Compositor Subsystem Using Win32 Hooking and Shared-Memory Inter-Process Communication (IPC)
+- Primary Objective: Build a desktop environment middleware engine that captures independent, running Windows applications, strips their native OS borders/title bars, and nests them dynamically into a custom application shell (Parent Window).
+- Definitive Engineering Framework: Python 3.x using the `pywin32` library to interface directly with `user32.dll` and `kernel32.dll`. 
+- Explicit Domain Constraints: STRICTLY NO MACHINE LEARNING, NO AI, NO DEEP LEARNING, AND NO LLMS. The architecture must rely entirely on deterministic Win32 API messaging loops and coordinate matrix algorithms.
+- Explicit Scope Exclusions: Heavy 3D applications (DirectX/Vulkan graphics swap-chain hooking) and cross-integrity UAC privilege bypasses are strictly out of scope. The engine targets standard Win32/GDI productivity applications (e.g., Notepad, Calculator) running at identical medium-integrity OS execution levels.
+
+# Target Architecture & Technical Requirements
+The engine must solve the three structural bottlenecks of native `SetParent` hijacking:
+1. Input Focus Preservation: Intercepting `WM_MOUSEACTIVATE` via a message loop hook so typing inside the nested child does not render the parent window frame "inactive."
+2. Geometric Resize Syncing: A deterministic algorithm that forces the child window to recalculate its bounding box size relative to parent `WM_SIZE` events.
+3. Coordinate Mapping: Translating physical mouse cursor coordinates accurately across parent-child boundary pixels.
+
+# Rigorous Quantitative Metrics
+The system's success will be validated by logging the following explicit engineering metrics:
+1. Input Propagation Delay (Delta t): Target is < 16,000 microseconds using time.perf_counter_ns() tracking WH_KEYBOARD_LL to WM_CHAR latency.
+2. Frame Rendering Latency: Frame stability measured during a 5Hz resize loop, ensuring child WM_PAINT frame drops do not exceed 15%.
+3. Computational Overhead: Memory tracking using GetProcessMemoryInfo (< 50MB RAM) and CPU tracking using GetProcessTimes (< 2% Core Utilization).
+
+# Concrete 14-Week Timeline
+- Weeks 1-2: Core Architecture, API Mapping & Proposal Draft
+- Weeks 3-5: The Window Hijacking Module (Visual Trapping & Border Stripping)
+- Weeks 6-8: Input Focus Routing & Layout Resizing Loop (Functional Prototype)
+- Weeks 9-11: Standardized App Testing Matrix & Data Benchmarking
+- Weeks 12-14: Final 50-Page Thesis Paper Compilation & Defense Preparation
+
+---
+
+# INITIALIZATION TASK: PHASE 1 / STEP 1
+
+Execute Step 1 of the roadmap immediately by providing a functional, copy-pasteable script that fulfills the following technical parameters:
+
+1. Target Environment: Python 3.x with `pywin32`.
+2. Action: Programmatically target an open instance of standard Windows Notepad (`notepad.exe`).
+3. Manipulation: 
+   - Retrieve its window handle via `FindWindow`.
+   - Strip the `WS_THICKFRAME` (resizing border) and `WS_CAPTION` (title bar) styles completely using `SetWindowLong`.
+   - Embed this modified Notepad window inside a custom parent window created via a native Python `tkinter` GUI frame using `SetParent`.
+4. Documentation Requirement: Every single Win32 API function call and hexadecimal window style flag used in the code must have a line-by-line inline code comment detailing its exact impact on the Windows Kernel message subsystem.
+
+Provide the complete script and the exact terminal commands needed to run it immediately.

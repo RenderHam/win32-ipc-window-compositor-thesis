@@ -1,0 +1,35 @@
+
+If you approach this with the mind of a junior developer and use AI as your co-pilot, your chances of successfully building this are actually very high (around 80–90%), but your chances of writing a thesis paper that passes a strict academic panel drop to around 40% if you don't frame it correctly.
+Here is an honest breakdown of how you and an AI can build this together, where you will win, and the trap you must avoid.
+------------------------------
+## 1. Where AI Will Give You Superpowers (The 90% Success Zone)
+As a junior dev, low-level Windows APIs (user32.dll, kernel32.dll, gdi32.dll) look like ancient, terrifying magic. They use weird C++ data types like HWND, LPARAM, WPARAM, and LPVOID.
+AI is incredibly good at this specific task because:
+
+* Boilerplate Generation: It can instantly generate the massive amounts of setup code required to register Windows hooks or create shared memory buffers.
+* Explaining the "Why": You can copy-paste a confusing Win32 function and ask, "Explain this to me like I’m a junior dev," and it will break down exactly how the OS memory is moving.
+* Debugging Cryptic Errors: When Windows gives you a random error code like 0x80070005 (Access Denied), AI will immediately point out that it's a UAC integrity level boundary issue.
+
+With an AI, you can absolutely build a working prototype in a couple of weeks.
+------------------------------
+## 2. The Danger Zone: The "Junior Dev + AI" Trap
+The biggest risk when a junior dev uses AI for a thesis is building something you don't actually understand.
+If you let the AI write all the code, you will end up with a complex web of low-level hooks, DLL injections, and memory pointers. When you stand in front of your thesis panel, they will ask questions like:
+
+* "Why did you choose a global WH_GETMESSAGE hook over a thread-specific hook?"
+* "How does your shared memory ring buffer prevent race conditions without using a heavy mutex?"
+
+If you blink and say, "Uh, the AI code just worked," you will fail instantly. The panel's job isn't to grade the code; it's to grade your understanding of the computer science principles behind the code.
+------------------------------
+## 3. The Playbook for Success
+If you want to pull this off, you need to change how you talk to the AI. Don't just ask it to "write the engine." Treat it like a strict, patient mentor.
+Follow this workflow:
+
+   1. Step-by-Step Micro-Coding: Do not ask for the whole system at once. Ask the AI to help you build one tiny feature at a time. (e.g., "Help me write a script that just finds the window handle of Notepad++ and prints its screen coordinates.")
+   2. Code Interrogation: For every 10 lines of code the AI gives you, make it explain 5 of them. Understand what every pointer and API call is doing.
+   3. Document as You Go: Every time you hit a bug (like a window flickering) and the AI helps you fix it (by intercepting a WM_ERASEBKGND message), write that down immediately. That exact bug-and-fix sequence becomes a paragraph in your thesis paper.
+
+## 4. Is it a good idea for a junior?
+Yes. This project will forcefully graduate your mind from a junior developer to a mid-level systems programmer. Most junior devs only know how to build web APIs or basic apps. By wrestling with the operating system, you will learn how computers actually work under the hood. It is a steep learning curve, but with an AI explaining the hard concepts, it is completely within your reach.
+To see if this style of development vibes with you, would you like to start with Step 1? We can write a dead-simple, heavily commented Python or C++ snippet whose only job is to hide the top title bar of any open window. It will give you a taste of how it feels to hack the Windows OS.
+
